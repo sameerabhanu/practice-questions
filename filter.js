@@ -72,18 +72,20 @@ const filterInStockProducts = function (products) {
 
 // orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
 
-const isDateValid = function (date) {
-  const [year, month, day] = date.orderDate.split('-');
+const isDateInRange = function (currentDate) {
+  return function (date) {
+    const [year, month, day] = date.orderDate.split('-');
 
-  if (year === '2024' && (month === '11' || month === '12')) {
-    return month === '11' ? day > 22 : day < 22;
+    if (year === '2024' && (month === '11' || month === '12')) {
+      return month === '11' ? day > currentDate : day < currentDate;
+    }
+
+    return false;
   }
-
-  return false;
 }
 
 const filterRecentOrders = function (orders) {
-  return orders.filter(isDateValid);
+  return orders.filter(isDateInRange(22));
 };
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
