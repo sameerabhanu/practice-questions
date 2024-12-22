@@ -73,11 +73,13 @@ const filterInStockProducts = function (products) {
 // orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
 
 const isDateInRange = function (currentDate) {
+  const [curYear, curMonth, curDay] = currentDate.split('-');
+
   return function (date) {
     const [year, month, day] = date.orderDate.split('-');
 
-    if (year === '2024' && (month === '11' || month === '12')) {
-      return month === '11' ? day > currentDate : day < currentDate;
+    if (year === curYear && (month === curMonth - 1 || month === curMonth)) {
+      return month === curMonth ? day < curDay : day > curDay;
     }
 
     return false;
@@ -85,7 +87,7 @@ const isDateInRange = function (currentDate) {
 }
 
 const filterRecentOrders = function (orders) {
-  return orders.filter(isDateInRange(22));
+  return orders.filter(isDateInRange('2024-12-22'));
 };
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
@@ -108,7 +110,11 @@ const filterBelowAveragePrice = function (products) {
 };
 
 // active users who posted in the last 7 days [{username: "alice", lastPostDate: "2024-12-01", active: true}, {username: "bob", lastPostDate: "2024-11-20", active: true}] => [{username: "alice", lastPostDate: "2024-12-01", active: true}]
-const filterRecentActiveUsers = function (users) { };
+
+
+const filterRecentActiveUsers = function (users) { 
+  const activeUsers = 
+};
 
 // students who passed all subjects [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}, {name: "Jane", subjects: [{name: "Math", passed: false}, {name: "Science", passed: true}]}] => [{name: "John", subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}]
 const filterStudentsWithAllSubjectsPassed = function (students) { };
