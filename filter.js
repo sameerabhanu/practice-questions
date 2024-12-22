@@ -47,18 +47,44 @@ const filterLongBooks = function (books) {
 };
 
 // users with incomplete profiles [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}] => [{username: "bob", profileComplete: false}]
-const filterIncompleteProfiles = function (users) {
 
+const filterIncompleteProfiles = function (users) {
+  return users.filter(function (user) {
+    return user.profileComplete;
+  })
 };
 
 // students with grades above 80 [{name: "John", grade: 75}, {name: "Jane", grade: 85}] => [{name: "Jane", grade: 85}]
-const filterHighGrades = function (students) { };
+
+const filterHighGrades = function (students) {
+  return students.filter(function (student) {
+    return student.grade > 80;
+  })
+};
 
 // products that are in stock [{product: "apple", inStock: true}, {product: "banana", inStock: false}] => [{product: "apple", inStock: true}]
-const filterInStockProducts = function (products) { };
+
+const filterInStockProducts = function (products) {
+  return products.filter(function (product) {
+    return product.inStock;
+  })
+};
 
 // orders placed in the last 30 days [{orderDate: "2024-11-01"}, {orderDate: "2024-12-01"}] => [{orderDate: "2024-12-01"}]
-const filterRecentOrders = function (orders) { };
+
+const isDateValid = function (date) {
+  const [year, month, day] = date.orderDate.split('-');
+
+  if (year === '2024' && (month === '11' || month === '12')) {
+    return month === '11' ? day > 22 : day < 22;
+  }
+
+  return false;
+}
+
+const filterRecentOrders = function (orders) {
+  return orders.filter(isDateValid);
+};
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
 const filterBelowAveragePrice = function (products) { };
