@@ -89,7 +89,23 @@ const filterRecentOrders = function (orders) {
 };
 
 // products with a price lower than the average [{name: "item1", price: 10}, {name: "item2", price: 20}, {name: "item3", price: 5}] => [{name: "item1", price: 10}, {name: "item3", price: 5}]
-const filterBelowAveragePrice = function (products) { };
+
+const sum = function (number1, number2) {
+  return number1 + number2;
+}
+
+const getPrice = function (product) {
+  return product.price;
+}
+
+const filterBelowAveragePrice = function (products) {
+  const prices = products.map(getPrice);
+  const avreage = (prices.reduce(sum, 0)) / products.length;
+
+  return products.filter(function (product) {
+    return product.price < avreage;
+  });
+};
 
 // active users who posted in the last 7 days [{username: "alice", lastPostDate: "2024-12-01", active: true}, {username: "bob", lastPostDate: "2024-11-20", active: true}] => [{username: "alice", lastPostDate: "2024-12-01", active: true}]
 const filterRecentActiveUsers = function (users) { };
