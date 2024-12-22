@@ -19,7 +19,18 @@ const filterLongWords = function (words) {
 };
 
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
-const filterAdults = function (people) { };
+
+const isGreaterThanTarget = function (target, key) {
+  return function (element) {
+    return element[key] > target;
+  }
+};
+
+const filterAdults = function (people) {
+  const isGreaterThan30 = isGreaterThanTarget(30, 'age');
+
+  return people.filter(isGreaterThan30);
+};
 
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
 const filterActiveUsers = function (users) { };
