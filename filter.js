@@ -20,16 +20,19 @@ const filterLongWords = function (words) {
 
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
 
-const isGreaterThanTarget = function (target, key) {
-  return function (element) {
-    return element[key] > target;
+const isGreaterThanTarget = function (target) {
+  return function (number) {
+    return number > target;
   }
 };
 
 const filterAdults = function (people) {
-  const isGreaterThan30 = isGreaterThanTarget(30, 'age');
+  const isGreaterThan30 = isGreaterThanTarget(30);
 
-  return people.filter(isGreaterThan30);
+  return people.filter(
+    function (people) {
+      return isGreaterThan30(people.age);
+    });
 };
 
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
@@ -44,20 +47,22 @@ const filterActiveUsers = function (users) {
 
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
 
-const isGreaterThan10 = function (number) {
-  return number > 10;
-};
-
 const filterNumbersGreaterThanTen = function (numbers) {
+  const isGreaterThan10 = isGreaterThanTarget(10);
+
   return numbers.filter(isGreaterThan10);
 };
 
 // books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
 
 const filterLongBooks = function (books) {
-  const hasMoreThan200Pages = isGreaterThanTarget(200, 'pages');
+  const hasMoreThan200Pages = isGreaterThanTarget(200);
 
-  return books.filter(hasMoreThan200Pages);
+  return books.filter(
+    function (books) {
+      return hasMoreThan200Pages(books.pages);
+    }
+  );
 };
 
 // users with incomplete profiles [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}] => [{username: "bob", profileComplete: false}]
